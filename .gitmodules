@@ -4,3 +4,6 @@
 [submodule "store"]
 	path = store
 	url = https://github.com/kpirabaharan/E-Commerce-Store
+[submodule "android_app"]
+	path = android_app
+	url = git@github.com:kpirabaharan/E-Commerce-Android-App.git
