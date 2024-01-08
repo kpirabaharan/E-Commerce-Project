@@ -7,3 +7,6 @@
 [submodule "android_app"]
 	path = android_app
 	url = git@github.com:kpirabaharan/E-Commerce-Android-App.git
+[submodule "flutter_app"]
+	path = flutter_app
+	url = git@github.com:kpirabaharan/E-Commerce-Flutter-App.git
