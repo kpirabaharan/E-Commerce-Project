@@ -1,0 +1,3 @@
+[submodule "admin-dashboard"]
+	path = admin-dashboard
+	url = git@github.com:kpirabaharan/E-Commerce-Admin-Dashboard.git
