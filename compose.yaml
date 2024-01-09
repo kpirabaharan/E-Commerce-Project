@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  web:
+  admin:
     build:
       context: ./admin-dashboard
       dockerfile: Dockerfile
@@ -11,6 +11,9 @@ services:
       NODE_ENV: development
     env_file:
       - ./admin-dashboard/.env
+    networks:
+      - admin-network
+      - store-network
     ports:
       - 3000:3000
     user: node
@@ -22,6 +25,8 @@ services:
           action: rebuild
         - path: ./admin-dashboard/next.config.js
           action: rebuild
+        - path: ./admin-dashboard/.env
+          action: rebuild
         - path: ./admin-dashboard
           target: /usr/src/app
           action: sync
@@ -32,6 +37,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ecommerce
+    networks:
+      - admin-network
     ports:
       - 5432:5432
     volumes:
@@ -41,5 +48,43 @@ services:
     image: adminer
     depends_on:
       - db
+    networks:
+      - admin-network
     ports:
       - 8080:8080
+
+  store:
+    build:
+      context: ./store
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - admin
+    environment:
+      NODE_ENV: development
+    env_file:
+      - ./store/.env
+    networks:
+      - store-network
+    ports:
+      - 3001:3000
+    user: node
+    develop:
+      watch:
+        - path: ./store/package.json
+          action: rebuild
+        - path: ./store/package-lock.json
+          action: rebuild
+        - path: ./store/next.config.js
+          action: rebuild
+        - path: ./store/.env
+          action: rebuild
+        - path: ./store
+          target: /usr/src/app
+          action: sync
+
+networks:
+  admin-network:
+    driver: bridge
+  store-network:
+    driver: bridge
