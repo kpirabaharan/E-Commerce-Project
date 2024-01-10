@@ -16,7 +16,6 @@ services:
       - store-network
     ports:
       - 3000:3000
-    user: node
     develop:
       watch:
         - path: ./admin-dashboard/package.json
@@ -33,6 +32,7 @@ services:
 
   db:
     image: postgres
+    pull_policy: if_not_present
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -46,6 +46,7 @@ services:
 
   adminer:
     image: adminer
+    pull_policy: if_not_present
     depends_on:
       - db
     networks:
@@ -68,7 +69,6 @@ services:
       - store-network
     ports:
       - 3001:3000
-    user: node
     develop:
       watch:
         - path: ./store/package.json
